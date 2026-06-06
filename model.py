@@ -1,21 +1,29 @@
-class StudentModel:
+students = []
 
-    def __init__(self):
-        self.students = []
 
-    def add_student(self, student):
-        self.students.append(student)
+def load_students():
+    try:
+        with open("students.txt", "r") as file:
+            for line in file:
+                data = line.strip().split(",")
 
-    def get_students(self):
-        return self.students
+                if len(data) == 3:
+                    student = {
+                        "id": data[0],
+                        "name": data[1],
+                        "grade": data[2]
+                    }
+                    students.append(student)
 
-    def find_student(self, student_id):
+    except FileNotFoundError:
+        pass
 
-        for student in self.students:
-            if student["id"] == student_id:
-                return student
 
-        return None
-
-    def delete_student(self, student):
-        self.students.remove(student)
+def save_students():
+    with open("students.txt", "w") as file:
+        for s in students:
+            file.write(
+                s["id"] + "," +
+                s["name"] + "," +
+                s["grade"] + "\n"
+            )
