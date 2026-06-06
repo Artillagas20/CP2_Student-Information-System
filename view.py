@@ -1,45 +1,34 @@
-class StudentView:
+def menu():
+    print("===== STUDENT INFORMATION SYSTEM =====")
+    print("1. Add Student")
+    print("2. View Students")
+    print("3. Update Student")
+    print("4. Delete Student")
+    print("5. Search Student")
+    print("6. Exit")
 
-    def display_menu(self):
 
-        print("===== Student Information System =====")
-        print("1. Add Student")
-        print("2. View Students")
-        print("3. Update Student")
-        print("4. Delete Student")
-        print("5. Search Student")
-        print("6. Exit")
+def show_message(message):
+    print(message)
 
-    def get_student_input(self):
 
-        name = input("Enter student name: ")
-        student_id = input("Enter student ID: ")
-        grade = input("Enter grade: ")
-
-        return {
-            "id": student_id,
-            "name": name,
-            "grade": grade
-        }
-
-    def display_students(self, students):
-
-        if len(students) == 0:
-            print("No student records.\n")
-            return
-
-        print("\n=== Student Records ===")
-
+def display_students(students):
+    if len(students) == 0:
+        print("No student records.\n")
+    else:
+        print("\nStudent List:")
         for s in students:
-            print(f"ID: {s['id']}")
-            print(f"Name: {s['name']}")
-            print(f"Grade: {s['grade']}")
-            print("-------------------")
-
+            print(
+                "ID:", s["id"],
+                "| Name:", s["name"],
+                "| Grade:", s["grade"]
+            )
         print()
 
-    def show_message(self, message):
-        print(message)
 
-    def get_student_id(self, text):
-        return input(text)
+def display_student(student):
+    print("\nStudent Found:")
+    print("ID:", student["id"])
+    print("Name:", student["name"])
+    print("Grade:", student["grade"])
+    print()
