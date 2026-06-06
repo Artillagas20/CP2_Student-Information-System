@@ -1,84 +1,82 @@
-from model import StudentModel
-from view import StudentView
+import model
+import view
 
 
-class StudentController:
+def add_student():
+    name = input("Enter student name: ")
+    student_id = input("Enter student ID: ")
+    grade = input("Enter grade: ")
 
-    def __init__(self):
-
-        self.model = StudentModel()
-        self.view = StudentView()
-
-    def add_student(self):
-
-        student = self.view.get_student_input()
-
-        if student["name"] == "" or student["id"] == "" or student["grade"] == "":
-            self.view.show_message("All fields are required.\n")
+    for s in model.students:
+        if s["id"] == student_id:
+            view.show_message(
+                "Student ID already exists!\n"
+            )
             return
 
-        existing = self.model.find_student(student["id"])
+    student = {
+        "id": student_id,
+        "name": name,
+        "grade": grade
+    }
 
-        if existing:
-            self.view.show_message("Student ID already exists.\n")
+    model.students.append(student)
+    model.save_students()
+
+    view.show_message(
+        "Student added successfully!\n"
+    )
+
+
+def view_students():
+    view.display_students(model.students)
+
+
+def update_student():
+    sid = input("Enter student ID to update: ")
+
+    for s in model.students:
+        if s["id"] == sid:
+            s["name"] = input(
+                "Enter new name: "
+            )
+            s["grade"] = input(
+                "Enter new grade: "
+            )
+
+            model.save_students()
+
+            view.show_message(
+                "Student updated successfully!\n"
+            )
             return
 
-        self.model.add_student(student)
+    view.show_message("Student not found.\n")
 
-        self.view.show_message("Student added successfully!\n")
 
-    def view_students(self):
+def delete_student():
+    sid = input("Enter student ID to delete: ")
 
-        students = self.model.get_students()
+    for s in model.students:
+        if s["id"] == sid:
+            model.students.remove(s)
 
-        self.view.display_students(students)
+            model.save_students()
 
-    def update_student(self):
+            view.show_message(
+                "Student deleted successfully!\n"
+            )
+            return
 
-        sid = self.view.get_student_id("Enter student ID to update: ")
+    view.show_message("Student not found.\n")
 
-        student = self.model.find_student(sid)
 
-        if student:
+def search_student():
+    sid = input("Enter student ID to search: ")
 
-            new_name = input("Enter new name: ")
-            new_grade = input("Enter new grade: ")
+    for s in model.students:
+        if s["id"] == sid:
+            view.display_student(s)
+            return
 
-            student["name"] = new_name
-            student["grade"] = new_grade
-
-            self.view.show_message("Student updated successfully!\n")
-
-        else:
-            self.view.show_message("Student not found.\n")
-
-    def delete_student(self):
-
-        sid = self.view.get_student_id("Enter student ID to delete: ")
-
-        student = self.model.find_student(sid)
-
-        if student:
-
-            self.model.delete_student(student)
-
-            self.view.show_message("Student deleted successfully!\n")
-
-        else:
-            self.view.show_message("Student not found.\n")
-
-    def search_student(self):
-
-        sid = self.view.get_student_id("Enter student ID to search: ")
-
-        student = self.model.find_student(sid)
-
-        if student:
-
-            print("\n=== Student Found ===")
-            print(f"ID: {student['id']}")
-            print(f"Name: {student['name']}")
-            print(f"Grade: {student['grade']}\n")
-
-        else:
-            self.view.show_message("Student not found.\n")
+    view.show_message("Student not found.\n")
