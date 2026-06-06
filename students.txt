@@ -1,7 +1,0 @@
-ID: 00551
-Name: John Carlo Artillagas
-Grade: 91
-
-ID: 00553
-Name: Mike Lorence Dulza
-Grade: 91
