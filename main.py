@@ -1,11 +1,11 @@
-from controller import StudentController
+import model
+import view
+import controller
 
-
-controller = StudentController()
+model.load_students()
 
 while True:
-
-    controller.view.display_menu()
+    view.menu()
 
     choice = input("Enter choice: ")
 
@@ -25,7 +25,7 @@ while True:
         controller.search_student()
 
     elif choice == "6":
-        print("Program closed.")
+        print("Exiting program...")
         break
 
     else:
